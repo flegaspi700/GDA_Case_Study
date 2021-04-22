@@ -28,7 +28,7 @@ Key tasks
 
     1. Check the data for errors.
     2. Choose your tools.
-    3. Transform the data so you can work with it eectively.
+    3. Transform the data so you can work with it effectively.
     4. Document the cleaning process.
 
 Deliverable
