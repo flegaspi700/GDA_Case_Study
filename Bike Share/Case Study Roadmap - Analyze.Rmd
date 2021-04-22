@@ -26,7 +26,71 @@ You will produce a report with the following deliverables:
     5. Supporting visualizations and key findings
     6. Your top three recommendations based on your analysis
 
+Guiding questions
+
+    - How should you organize your data to perform analysis on it?
+    - Has your data been properly formatted?
+    - What surprises did you discover in the data?
+    - What trends or relationships did you find in the data?
+    - How will these insights help answer your business questions?
+
+Key tasks
+
+    1. Aggregate your data so it’s useful and accessible.
+    2. Organize and format your data.
+    3. Perform calculations
+    4. Identify trends and relationships.
+
+Deliverable
+
+    - A summary of your analysis 
+
+##### Start of cleaning and transformation
+###### This analysis is for case study 1 from the Google Data Analytics Certificate (Cyclistic).  It’s originally based on the case study "'Sophisticated, Clear, and Polished’: Divvy and Data Visualization" written by Kevin Hartman (found here: https://artscience.blog/home/divvy-dataviz-case-study). We will be using the Divvy dataset for the case study. The purpose of this script is to consolidate downloaded Divvy data into a single dataframe and then conduct simple analysis to help answer the key question: “In what ways do members and casual riders use Divvy bikes differently?”
+
+
+```{r Install Packages, eval=FALSE, include=FALSE}
+# # # # # # # # # # # # # # # # # # # # # # # 
+# Install required packages
+# tidyverse for data import and wrangling
+# ggplot for visualization
+# # # # # # # # # # # # # # # # # # # # # # #  
+
+install.packages("tidyverse")
+install.packages("here")
+install.packages("skimr")
+install.packages("janitor")
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("rmarkdown")
+install.packages("ggplot2")
+```
+
+```{r load Libraries}
+### Load Necessary libraries
+library(tidyverse)
+library(here)
+library(skimr)
+library(janitor)
+library(dplyr)
+library(tidyr)
+library(rmarkdown)
+library(ggplot2)
+```
+
 
 ```{r}
+# Loading multiple .csv files as separate data frames
+# path to folder that holds multiple .csv files
 
+folder <- "D:/Portfolio/GDA_Case_Study/Bike Share/data/divvy-tripdata/"   
+
+file_list <- list.files(path = folder, pattern = "*.csv")
+
+# read in each .csv file in file_list and create a data frame with the same name as the .csv file
+for (i in 1:length(file_list)){
+  assign(file_list[i], 
+  read.csv(paste(folder, file_list[i], sep=''))
+)}
 ```
+
