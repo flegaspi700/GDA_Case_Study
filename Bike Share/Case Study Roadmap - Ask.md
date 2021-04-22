@@ -1,6 +1,7 @@
 Case Study Roadmap - Ask
 
-Ask Three questions will guide the future marketing program: 
+Ask Three questions will guide the future marketing program:
+    
     1. How do annual members and casual riders use Cyclistic bikes dierently?
     2. Why would casual riders buy Cyclistic annual memberships? 
     3. How can Cyclistic use digital media to influence casual riders to become members? 
