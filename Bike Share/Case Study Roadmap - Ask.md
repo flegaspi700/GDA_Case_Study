@@ -8,7 +8,7 @@ Ask Three questions will guide the future marketing program:
     
 You will produce a report with the following deliverables: 
 
-    1. A clear statement of the business task 
+   # Complete 1. A clear statement of the business task
     2. A description of all data sources used 
     3. Documentation of any cleaning or manipulation of data 
     4. A summary of your analysis 
@@ -28,14 +28,17 @@ Guiding questions
 Key tasks
 
     1. Identify the business task
-    2. Consider key stakeholders: 
-        - Lily Moreno
-        - Cyclistic marketing analytics team
-        - Cyclistic executive team
+    2. Consider key stakeholders
 
 Deliverable
 
+Business tasks:
     Determine how do annual members and casual riders use Cyclistic bikes dierently.
     Determine reasons why would casual riders buy Cyclistic annual memberships.
     Determine how can Cyclistic use digital media to influence casual riders to become members.
+
+Key Stakeholders:
+        - Lily Moreno
+        - Cyclistic marketing analytics team
+        - Cyclistic executive team
 
