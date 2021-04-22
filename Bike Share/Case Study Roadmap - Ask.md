@@ -33,12 +33,12 @@ Key tasks
 Deliverable
 
 Business tasks:
-    -Determine how do annual members and casual riders use Cyclistic bikes dierently.
-    -Determine reasons why would casual riders buy Cyclistic annual memberships.
-    -Determine how can Cyclistic use digital media to influence casual riders to become members.
+    - Determine how do annual members and casual riders use Cyclistic bikes dierently.
+    - Determine reasons why would casual riders buy Cyclistic annual memberships.
+    - Determine how can Cyclistic use digital media to influence casual riders to become members.
 
 Key Stakeholders:
-    -Lily Moreno
-    -Cyclistic marketing analytics team
-    -Cyclistic executive team
+    - Lily Moreno
+    - Cyclistic marketing analytics team
+    - Cyclistic executive team
 
