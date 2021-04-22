@@ -17,7 +17,7 @@ problem-solving you conducted, highlighting what you have learned from this.
 * Choose the best solution and propose recommendations for the client or business to take. Explain why you made your choice and how this will affect the scenario in a positive way. Be specific and include what needs to be done, who should enforce it, and when.
 
 
-### Case Study Roadmap guide
+## Case Study Roadmap guide
 * Ask:
     Three questions will guide the future marketing program:
       1. How do annual members and casual riders use Cyclistic bikes differently?
