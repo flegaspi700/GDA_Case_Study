@@ -12,12 +12,3 @@ Key tasks
 
 Deliverable
 A clear statement of the business task
-
-
-Prepare
-You will use Cyclistic’s historical trip data
-
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
