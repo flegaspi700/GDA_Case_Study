@@ -19,13 +19,23 @@ You will produce a report with the following deliverables:
 Guiding questions
 
     - What is the problem you are trying to solve?
+        * If there are any factors that could influence casual riders to become members. 
+        * Help the design marketing team to understand how annual members and casual riders differ, why casual riders would buy a   membership, and how digital media could affect their marketing tactics.
+
     - How can your insights drive business decisions?
+        * The insights from this case study will help the Design marketing team on creating strategies aimed at converting casual riders into annual members.
 
 Key tasks
 
     1. Identify the business task
-    2. Consider key stakeholders
+    2. Consider key stakeholders: 
+        - Lily Moreno
+        - Cyclistic marketing analytics team
+        - Cyclistic executive team
 
 Deliverable
 
-    A clear statement of the business tasks
+    Determine how do annual members and casual riders use Cyclistic bikes dierently.
+    Determine reasons why would casual riders buy Cyclistic annual memberships.
+    Determine how can Cyclistic use digital media to influence casual riders to become members.
+
