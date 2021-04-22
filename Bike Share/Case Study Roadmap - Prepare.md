@@ -36,7 +36,8 @@ Key tasks
 Deliverable
 
     - This is public data from Motivate International Inc. that I will use to explore how dierent customer types are using Cyclistic bikes. 
-    - I will only use this data for education purpose. 
+    - I will only use this data for education purpose, as part of the Google Analytic Certificate course. 
+    - I will adhere to the licensing, privacy, security, and accessibility agreement.
     - I copied the data files from this link <https://divvy-tripdata.s3.amazonaws.com/index.html>
     - I copied the 12 files 202004-divvy-tripdata to 202103-divvy-tripdata to my harddrive and github profile (flegaspi700).
 
