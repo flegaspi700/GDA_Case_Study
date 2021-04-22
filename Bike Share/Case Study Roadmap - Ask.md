@@ -33,7 +33,7 @@ Key tasks
 Deliverable
 
     Business tasks:
-        - Determine how do annual members and casual riders use Cyclistic bikes dierently.
+        - Determine how do annual members and casual riders use Cyclistic bikes differently.
         - Determine reasons why would casual riders buy Cyclistic annual memberships.
         - Determine how can Cyclistic use digital media to influence casual riders to become members.
 
