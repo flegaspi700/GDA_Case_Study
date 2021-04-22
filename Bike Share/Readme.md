@@ -31,3 +31,9 @@ problem-solving you conducted, highlighting what you have learned from this.
       4. A summary of your analysis
       5. Supporting visualizations and key findings
       6. Your top three recommendations based on your analysis
+
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
