@@ -11,4 +11,4 @@ Key tasks
     2. Consider key stakeholders
 
 Deliverable
-A clear statement of the business task
+A clear statement of the business tasks
