@@ -17,22 +17,6 @@ problem-solving you conducted, highlighting what you have learned from this.
 * Choose the best solution and propose recommendations for the client or business to take. Explain why you made your choice and how this will affect the scenario in a positive way. Be specific and include what needs to be done, who should enforce it, and when.
 
 
-## Case Study Roadmap guide
-* Ask:
-    Three questions will guide the future marketing program:
-      1. How do annual members and casual riders use Cyclistic bikes differently?
-      2. Why would casual riders buy Cyclistic annual memberships?
-      3. How can Cyclistic use digital media to influence casual riders to become members?
-      
-    You will produce a report with the following deliverables:
-      1. A clear statement of the business task
-      2. A description of all data sources used
-      3. Documentation of any cleaning or manipulation of data
-      4. A summary of your analysis
-      5. Supporting visualizations and key findings
-      6. Your top three recommendations based on your analysis
-
-
 | First Header  | Second Header |
 | ------------- | ------------- |
 | Content Cell  | Content Cell  |
