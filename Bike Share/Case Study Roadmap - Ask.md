@@ -27,8 +27,8 @@ Guiding questions
 
 Key tasks
 
-    1. Identify the business task
-    2. Consider key stakeholders
+    1. Identify the business task - Completed
+    2. Consider key stakeholders - Completed
 
 Deliverable
 
