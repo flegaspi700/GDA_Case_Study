@@ -331,6 +331,7 @@ aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdat
 
 ```
 
+
 ##### Minor fix on Day of week
 ```{r Fix week order, include=FALSE}
 # Notice that the days of the week are out of order. Let's fix that.
@@ -357,7 +358,6 @@ tripdata_all_v2 %>%
   arrange(member_casual, weekday)		
 ```
 
-
 ##### Visualize the number of rides by rider type
 ```{r Lets visualize the number of rides by rider type}
 # Let's visualize the number of rides by rider type
@@ -367,7 +367,9 @@ tripdata_all_v2 %>%
   summarise(number_of_rides = n(), average_duration = mean(ride_length2)) %>% 
   arrange(member_casual, weekday)  %>% 
   ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) +
-  geom_col(position = "dodge")
+  geom_col(position = "dodge") +
+  theme(axis.text.x = element_text(angle = 45)) +
+  theme(axis.text.y = element_text(angle = 90))
 
 ```
 
