@@ -46,15 +46,12 @@ Deliverable
     - A summary of your analysis 
 
 ##### Start of cleaning and transformation
-###### This analysis is for case study 1 from the Google Data Analytics Certificate (Cyclistic).  It’s originally based on the case study "'Sophisticated, Clear, and Polished’: Divvy and Data Visualization" written by Kevin Hartman (found here: https://artscience.blog/home/divvy-dataviz-case-study). We will be using the Divvy dataset for the case study. The purpose of this script is to consolidate downloaded Divvy data into a single dataframe and then conduct simple analysis to help answer the key question: “In what ways do members and casual riders use Divvy bikes differently?”
+###### This analysis is for case study 1 from the Google Data Analytics Certificate (Cyclistic).  
 
+###### Install required packages for data cleaning, transformation, and visualization.
 
 ```{r Install Packages, eval=FALSE, include=FALSE}
 # # # # # # # # # # # # # # # # # # # # # # # 
-# Install required packages
-# tidyverse for data import and wrangling
-# ggplot for visualization
-# # # # # # # # # # # # # # # # # # # # # # #  
 
 install.packages("tidyverse")
 install.packages("here")
@@ -67,7 +64,7 @@ install.packages("ggplot2")
 install.packages("lubridate")
 ```
 
-
+##### Load required libraries.
 ```{r load Libraries}
 ### Load Necessary libraries
 library(tidyverse)
@@ -81,9 +78,8 @@ library(ggplot2)
 library(lubridate)
 ```
 
-
+##### Loading multiple .csv files as separate data frames
 ```{r Load csv files to dataframe, include=FALSE}
-# Loading multiple .csv files as separate data frames
 # path to folder that holds multiple .csv files
 
 folder <- "D:/Portfolio/GDA_Case_Study/Bike Share/data/divvy-tripdata/"   
@@ -97,7 +93,8 @@ for (i in 1:length(file_list)){
 )}
 ```
 
-
+##### Check data for consistency in reparation for cleaning and transoformation.
+##### Check dataframe column names
 ```{r Check Column Names, include=FALSE}
 #Check for column names for consistency
 
@@ -116,7 +113,7 @@ colnames(tripdata_202103)
 
 ```
 
-
+###### Check dataframe structure
 ```{r Check Structure, include=FALSE}
 #Check structure for consistency
 
@@ -134,6 +131,7 @@ str(tripdata_202102)
 str(tripdata_202103)
 ```
 
+##### Check the number of rows 
 ```{r Number of rows, include=FALSE}
 #Check Number of rows for consistency
 
@@ -151,6 +149,7 @@ nrow(tripdata_202102)
 nrow(tripdata_202103)
 ```
 
+##### Check dataframe Dimensions
 ```{r Dimension of dataframe, include=FALSE}
 #Check Dimension of dataframe for consistency
 
@@ -168,6 +167,7 @@ dim(tripdata_202102)
 dim(tripdata_202103)
 ```
 
+##### Check dataframe Summary
 ```{r Check Summary of dataframe, include=FALSE}
 #Check Summary for consistency, and Null values
 
@@ -186,7 +186,7 @@ summary(tripdata_202103)
 
 ```
 
-
+##### Check first 6 rows
 ```{r Check first 6 rows of dataframe, include=FALSE}
 #Check first 6 rows of dataframe
 
@@ -205,17 +205,17 @@ head(tripdata_202103)
 
 ```
 
-
-
+##### Merge files to single dataframe
 ```{r Merge Files, include=FALSE}
 #Merge Files to a single data frame
 tripdata_all <- rbind(tripdata_202004, tripdata_202005, tripdata_202006, tripdata_202007, tripdata_202008, tripdata_202009, tripdata_202010, tripdata_202011, tripdata_202012, tripdata_202101, tripdata_202102, tripdata_202103)
 
 ```
 
-
+##### Inspect the new dataframe that has been created
 ```{r Inspect combined data, include=FALSE}
-# Inspect the new table that has been created
+# Inspect the new dataframe that has been created
+
 colnames(tripdata_all)  #List of column names
 nrow(tripdata_all)  #How many rows are in data frame?
 dim(tripdata_all)  #Dimensions of the data frame?
@@ -225,6 +225,7 @@ summary(tripdata_all)  #Statistical summary of data. Mainly for numerics
 skim_without_charts(tripdata_all)
 ```
 
+##### Transform Necessary Columns for calculation
 ```{r Mutate Columns, include=FALSE}
 # Transform Necessary Columns
 
@@ -247,8 +248,8 @@ tripdata_all <- mutate(tripdata_all, week_of_day = wday(as.Date(started_date), l
 
 ```
 
-
-```{r Mutate Columns, include=FALSE}
+##### Transform Necessary Columns for calculation
+```{r Mutate Columns 2, include=FALSE}
 
 #Transform additional data
 
@@ -260,8 +261,8 @@ tripdata_all$day_of_week <- format(as.Date(tripdata_all$date), "%A")
 
 ```
 
-
-```{r Mutate Columns, include=FALSE}
+##### Verify if column is numeric
+```{r Mutate Columns 3, include=FALSE}
 
 tripdata_all$ride_length2 <- difftime(tripdata_all$ended_at,tripdata_all$started_at)
 
@@ -271,9 +272,11 @@ is.numeric(tripdata_all$ride_length2)
 
 ```
 
-```{r Remove bad data include=FALSE}
 
-## Remove "bad" data
+##### Remove bad data. 
+```{r Remove bad data, include=FALSE}
+
+## Remove data with less than 0 ride_length
 
 tripdata_all_v2 <- tripdata_all[!(tripdata_all$start_station_name == "HQ QR" | tripdata_all$ride_length2<0),]
 
@@ -284,6 +287,8 @@ str(tripdata_all_v2)
 
 ```
 
+
+##### Perform initial analysis of data
 ```{r Initial Analysis}
 
 # Descriptive analysis on ride_length (all figures in seconds)
@@ -297,28 +302,28 @@ summary(tripdata_all_v2$ride_length2)
 
 ```
 
-
+##### Compare members and casual users - mean
 ```{r Compare members and casual users }
 # Compare members and casual users
 aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = mean)
 ```
 
-
-```{r}
+##### Compare members and casual users - median
+```{r Compare members and casual users 2}
 aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = median)
 ```
 
-
-```{r}
+##### Compare members and casual users - max
+```{r Compare members and casual users 3}
 aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = max)
 ```
 
-
-```{r}
+##### Compare members and casual users - min
+```{r Compare members and casual users 4}
 aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = min)
 ```
 
-
+##### See the average ride time by each day for members vs casual users
 ```{r See the average ride time by each day for members vs casual users, include=FALSE}
 
 # See the average ride time by each day for members vs casual users
@@ -326,19 +331,21 @@ aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdat
 
 ```
 
-
-```{r Fix week order include=FALSE}
+##### Minor fix on Day of week
+```{r Fix week order, include=FALSE}
 # Notice that the days of the week are out of order. Let's fix that.
 tripdata_all_v2$day_of_week <- ordered(tripdata_all_v2$day_of_week, levels=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
 
 ```
 
-```{r See the average ride time by each day for members vs casual users}
+##### See the average ride time by each day for members vs casual users
+```{r See the average ride time by each day for members vs casual users 2}
 # Now, let's run the average ride time by each day for members vs casual users
 aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdata_all_v2$day_of_week, FUN = mean)
 
 ```
 
+##### analyze ridership data by type and weekday
 ```{r analyze ridership data by type and weekday}
 
 # analyze ridership data by type and weekday
@@ -350,7 +357,9 @@ tripdata_all_v2 %>%
   arrange(member_casual, weekday)		
 ```
 
-```{r Let's visualize the number of rides by rider type}
+
+##### Visualize the number of rides by rider type
+```{r Lets visualize the number of rides by rider type}
 # Let's visualize the number of rides by rider type
 tripdata_all_v2 %>% 
   mutate(weekday = wday(started_at, label = TRUE)) %>% 
@@ -362,8 +371,8 @@ tripdata_all_v2 %>%
 
 ```
 
-
-```{r Let's create a visualization for average duration}
+##### Create a visualization for average duration
+```{r Lets create a visualization for average duration}
 # Let's create a visualization for average duration
 tripdata_all_v2 %>% 
   mutate(weekday = wday(started_at, label = TRUE)) %>% 
@@ -375,10 +384,10 @@ tripdata_all_v2 %>%
 
 ```
 
+#####
 ```{r eval=FALSE, include=FALSE}
 counts <- aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdata_all_v2$day_of_week, FUN = mean)
 write.csv(counts, file = 'D:/Portfolio/GDA_Case_Study/Bike Share/data/divvy-tripdata/avg_ride_length.csv')
-
 ```
 
 
