@@ -64,6 +64,7 @@ install.packages("dplyr")
 install.packages("tidyr")
 install.packages("rmarkdown")
 install.packages("ggplot2")
+install.packages("lubridate")
 ```
 
 
@@ -77,10 +78,11 @@ library(dplyr)
 library(tidyr)
 library(rmarkdown)
 library(ggplot2)
+library(lubridate)
 ```
 
 
-```{r Load csv files to dataframe}
+```{r Load csv files to dataframe, include=FALSE}
 # Loading multiple .csv files as separate data frames
 # path to folder that holds multiple .csv files
 
@@ -202,6 +204,9 @@ head(tripdata_202102)
 head(tripdata_202103)
 
 ```
+
+
+
 ```{r Merge Files, include=FALSE}
 #Merge Files to a single data frame
 tripdata_all <- rbind(tripdata_202004, tripdata_202005, tripdata_202006, tripdata_202007, tripdata_202008, tripdata_202009, tripdata_202010, tripdata_202011, tripdata_202012, tripdata_202101, tripdata_202102, tripdata_202103)
@@ -217,28 +222,163 @@ dim(tripdata_all)  #Dimensions of the data frame?
 head(tripdata_all)  #See the first 6 rows of data frame.  Also tail(qs_raw)
 str(tripdata_all)  #See list of columns and data types (numeric, character, etc)
 summary(tripdata_all)  #Statistical summary of data. Mainly for numerics
-
+skim_without_charts(tripdata_all)
 ```
 
 ```{r Mutate Columns, include=FALSE}
 # Transform Necessary Columns
 
 tripdata_all <- mutate(tripdata_all, ride_id = as.character(ride_id)
-                   ,rideable_type = as.character(rideable_type)) 
+                  ,rideable_type = as.character(rideable_type)) 
 
-#tripdata_all <- mutate(tripdata_all, start_id = as.character(ride_id)
-#                   ,rideable_type = as.character(rideable_type))
+tripdata_all <- mutate(tripdata_all, started_date = as_datetime(started_at))
+
+tripdata_all <- mutate(tripdata_all, ended_date = as_datetime(ended_at))
+
+tripdata_all <- mutate(tripdata_all, ride_length = difftime(ended_date, started_date, units = "mins"))
+
+tripdata_all <- mutate(tripdata_all, ride_length = as.numeric(ride_length))
+
+tripdata_all <- mutate(tripdata_all, ride_length = as.POSIXct(ride_length*60, origin = "1960-01-01 00:00:00","GMT"))
+
+tripdata_all <- mutate(tripdata_all, ride_length = format(ride_length, format = "%H:%M:%S"))
+
+tripdata_all <- mutate(tripdata_all, week_of_day = wday(as.Date(started_date), label=TRUE, abbr = FALSE, week_start = 1))
 
 ```
 
 
+```{r Mutate Columns, include=FALSE}
+
+#Transform additional data
+
+tripdata_all$date <- as.Date(tripdata_all$started_at)
+tripdata_all$month <- format(as.Date(tripdata_all$date), "%m")
+tripdata_all$day <- format(as.Date(tripdata_all$date), "%d")
+tripdata_all$year <- format(as.Date(tripdata_all$date), "%Y")
+tripdata_all$day_of_week <- format(as.Date(tripdata_all$date), "%A")
+
+```
 
 
+```{r Mutate Columns, include=FALSE}
+
+tripdata_all$ride_length2 <- difftime(tripdata_all$ended_at,tripdata_all$started_at)
+
+is.factor(tripdata_all$ride_length2)
+tripdata_all$ride_length2 <- as.numeric(as.character(tripdata_all$ride_length2))
+is.numeric(tripdata_all$ride_length2)
+
+```
+
+```{r Remove bad data include=FALSE}
+
+## Remove "bad" data
+
+tripdata_all_v2 <- tripdata_all[!(tripdata_all$start_station_name == "HQ QR" | tripdata_all$ride_length2<0),]
 
 
+# Inspect the structure of the columns
+str(tripdata_all)
+str(tripdata_all_v2)
+
+```
+
+```{r Initial Analysis}
+
+# Descriptive analysis on ride_length (all figures in seconds)
+mean(tripdata_all_v2$ride_length2) #straight average (total ride length / rides)
+median(tripdata_all_v2$ride_length2) #midpoint number in the ascending array of ride lengths
+max(tripdata_all_v2$ride_length2) #longest ride
+min(tripdata_all_v2$ride_length2) #shortest ride
+
+# You can condense the four lines above to one line using summary() on the specific attribute
+summary(tripdata_all_v2$ride_length2)
+
+```
 
 
+```{r Compare members and casual users }
+# Compare members and casual users
+aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = mean)
+```
 
 
+```{r}
+aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = median)
+```
+
+
+```{r}
+aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = max)
+```
+
+
+```{r}
+aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = min)
+```
+
+
+```{r See the average ride time by each day for members vs casual users, include=FALSE}
+
+# See the average ride time by each day for members vs casual users
+aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdata_all_v2$day_of_week, FUN = mean)
+
+```
+
+
+```{r Fix week order include=FALSE}
+# Notice that the days of the week are out of order. Let's fix that.
+tripdata_all_v2$day_of_week <- ordered(tripdata_all_v2$day_of_week, levels=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+
+```
+
+```{r See the average ride time by each day for members vs casual users}
+# Now, let's run the average ride time by each day for members vs casual users
+aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdata_all_v2$day_of_week, FUN = mean)
+
+```
+
+```{r analyze ridership data by type and weekday}
+
+# analyze ridership data by type and weekday
+tripdata_all_v2 %>% 
+  mutate(weekday = wday(started_at, label = TRUE)) %>%  #creates weekday field using wday()
+  group_by(member_casual, weekday) %>%  #groups by usertype and weekday
+  summarise(number_of_rides = n()						#calculates the number of rides and average duration 
+  ,average_duration = mean(ride_length2)) %>% 		# calculates the average duration
+  arrange(member_casual, weekday)		
+```
+
+```{r Let's visualize the number of rides by rider type}
+# Let's visualize the number of rides by rider type
+tripdata_all_v2 %>% 
+  mutate(weekday = wday(started_at, label = TRUE)) %>% 
+  group_by(member_casual, weekday) %>% 
+  summarise(number_of_rides = n(), average_duration = mean(ride_length2)) %>% 
+  arrange(member_casual, weekday)  %>% 
+  ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) +
+  geom_col(position = "dodge")
+
+```
+
+
+```{r Let's create a visualization for average duration}
+# Let's create a visualization for average duration
+tripdata_all_v2 %>% 
+  mutate(weekday = wday(started_at, label = TRUE)) %>% 
+  group_by(member_casual, weekday) %>% 
+  summarise(number_of_rides = n(), average_duration = mean(ride_length2)) %>% 
+  arrange(member_casual, weekday)  %>% 
+  ggplot(aes(x = weekday, y = average_duration, fill = member_casual)) +
+  geom_col(position = "dodge")
+
+```
+
+```{r eval=FALSE, include=FALSE}
+counts <- aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdata_all_v2$day_of_week, FUN = mean)
+write.csv(counts, file = 'D:/Portfolio/GDA_Case_Study/Bike Share/data/divvy-tripdata/avg_ride_length.csv')
+
+```
 
 
