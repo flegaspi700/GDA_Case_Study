@@ -220,7 +220,16 @@ summary(tripdata_all)  #Statistical summary of data. Mainly for numerics
 
 ```
 
+```{r Mutate Columns, include=FALSE}
+# Transform Necessary Columns
 
+tripdata_all <- mutate(tripdata_all, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)) 
+
+#tripdata_all <- mutate(tripdata_all, start_id = as.character(ride_id)
+#                   ,rideable_type = as.character(rideable_type))
+
+```
 
 
 
