@@ -367,9 +367,9 @@ tripdata_all_v2 %>%
   summarise(number_of_rides = n(), average_duration = mean(ride_length2)) %>% 
   arrange(member_casual, weekday)  %>% 
   ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) +
-  geom_col(position = "dodge") +
+  geom_col(position = "stack")
   theme(axis.text.x = element_text(angle = 45)) +
-  theme(axis.text.y = element_text(angle = 90))
+  theme(axis.text.y = element_text(margin = 100))) 
 
 ```
 
