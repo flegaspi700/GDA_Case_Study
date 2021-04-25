@@ -48,227 +48,79 @@ Deliverable
 ##### Start of cleaning and transformation
 ###### This analysis is for case study 1 from the Google Data Analytics Certificate (Cyclistic).  
 
-###### Install required packages for data cleaning, transformation, and visualization.
+###### Install required packages and library for data cleaning, transformation, and visualization.
 
 ```{r Install Packages, eval=FALSE, include=FALSE}
 # # # # # # # # # # # # # # # # # # # # # # # 
 
 install.packages("tidyverse")
-install.packages("here")
-install.packages("skimr")
-install.packages("janitor")
-install.packages("dplyr")
-install.packages("tidyr")
-install.packages("rmarkdown")
-install.packages("ggplot2")
-install.packages("lubridate")
-```
 
-##### Load required libraries.
-```{r load Libraries}
 ### Load Necessary libraries
 library(tidyverse)
-library(here)
-library(skimr)
-library(janitor)
-library(dplyr)
-library(tidyr)
-library(rmarkdown)
-library(ggplot2)
-library(lubridate)
+
 ```
+
 
 ##### Loading multiple .csv files as separate data frames
 ```{r Load csv files to dataframe, include=FALSE}
 # path to folder that holds multiple .csv files
 
-folder <- "D:/Portfolio/GDA_Case_Study/Bike Share/data/divvy-tripdata/"   
+setwd("D:/Portfolio/GDA_Case_Study/Bike Share/data/divvy-tripdata/")  
+file_list <- list.files()
+csv <- lapply(file_list, read.csv)
 
-file_list <- list.files(path = folder, pattern = "*.csv")
+all_trips <- do.call(rbind, csv)
 
-# read in each .csv file in file_list and create a data frame with name tripdate_<date>
-for (i in 1:length(file_list)){
-  assign(paste("tripdata_", substr(file_list[i], 1, 6), sep = ''), 
-  read.csv(paste(folder, file_list[i], sep=''))
-)}
 ```
 
 ##### Check data for consistency in reparation for cleaning and transoformation.
-##### Check dataframe column names
-```{r Check Column Names, include=FALSE}
-#Check for column names for consistency
 
-colnames(tripdata_202004)
-colnames(tripdata_202005)
-colnames(tripdata_202006)
-colnames(tripdata_202007)
-colnames(tripdata_202008)
-colnames(tripdata_202009)
-colnames(tripdata_202010)
-colnames(tripdata_202011)
-colnames(tripdata_202012)
-colnames(tripdata_202101)
-colnames(tripdata_202102)
-colnames(tripdata_202103)
-
-```
-
-###### Check dataframe structure
-```{r Check Structure, include=FALSE}
-#Check structure for consistency
-
-str(tripdata_202004)
-str(tripdata_202005)
-str(tripdata_202006)
-str(tripdata_202007)
-str(tripdata_202008)
-str(tripdata_202009)
-str(tripdata_202010)
-str(tripdata_202011)
-str(tripdata_202012)
-str(tripdata_202101)
-str(tripdata_202102)
-str(tripdata_202103)
-```
-
-##### Check the number of rows 
-```{r Number of rows, include=FALSE}
-#Check Number of rows for consistency
-
-nrow(tripdata_202004)
-nrow(tripdata_202005)
-nrow(tripdata_202006)
-nrow(tripdata_202007)
-nrow(tripdata_202008)
-nrow(tripdata_202009)
-nrow(tripdata_202010)
-nrow(tripdata_202011)
-nrow(tripdata_202012)
-nrow(tripdata_202101)
-nrow(tripdata_202102)
-nrow(tripdata_202103)
-```
-
-##### Check dataframe Dimensions
-```{r Dimension of dataframe, include=FALSE}
-#Check Dimension of dataframe for consistency
-
-dim(tripdata_202004)
-dim(tripdata_202005)
-dim(tripdata_202006)
-dim(tripdata_202007)
-dim(tripdata_202008)
-dim(tripdata_202009)
-dim(tripdata_202010)
-dim(tripdata_202011)
-dim(tripdata_202012)
-dim(tripdata_202101)
-dim(tripdata_202102)
-dim(tripdata_202103)
-```
-
-##### Check dataframe Summary
-```{r Check Summary of dataframe, include=FALSE}
-#Check Summary for consistency, and Null values
-
-summary(tripdata_202004)
-summary(tripdata_202005)
-summary(tripdata_202006)
-summary(tripdata_202007)
-summary(tripdata_202008)
-summary(tripdata_202009)
-summary(tripdata_202010)
-summary(tripdata_202011)
-summary(tripdata_202012)
-summary(tripdata_202101)
-summary(tripdata_202102)
-summary(tripdata_202103)
-
-```
-
-##### Check first 6 rows
-```{r Check first 6 rows of dataframe, include=FALSE}
-#Check first 6 rows of dataframe
-
-head(tripdata_202004)
-head(tripdata_202005)
-head(tripdata_202006)
-head(tripdata_202007)
-head(tripdata_202008)
-head(tripdata_202009)
-head(tripdata_202010)
-head(tripdata_202011)
-head(tripdata_202012)
-head(tripdata_202101)
-head(tripdata_202102)
-head(tripdata_202103)
-
-```
-
-##### Merge files to single dataframe
-```{r Merge Files, include=FALSE}
-#Merge Files to a single data frame
-tripdata_all <- rbind(tripdata_202004, tripdata_202005, tripdata_202006, tripdata_202007, tripdata_202008, tripdata_202009, tripdata_202010, tripdata_202011, tripdata_202012, tripdata_202101, tripdata_202102, tripdata_202103)
-
-```
 
 ##### Inspect the new dataframe that has been created
 ```{r Inspect combined data, include=FALSE}
 # Inspect the new dataframe that has been created
 
-colnames(tripdata_all)  #List of column names
-nrow(tripdata_all)  #How many rows are in data frame?
-dim(tripdata_all)  #Dimensions of the data frame?
-head(tripdata_all)  #See the first 6 rows of data frame.  Also tail(qs_raw)
-str(tripdata_all)  #See list of columns and data types (numeric, character, etc)
-summary(tripdata_all)  #Statistical summary of data. Mainly for numerics
-skim_without_charts(tripdata_all)
+colnames(all_trips)  #List of column names
+nrow(all_trips)  #How many rows are in data frame?
+dim(all_trips)  #Dimensions of the data frame?
+head(all_trips)  #See the first 6 rows of data frame.  Also tail(qs_raw)
+str(all_trips)  #See list of columns and data types (numeric, character, etc)
+summary(all_trips)  #Statistical summary of data. Mainly for numerics
+#skim_without_charts(all_trips)
 ```
+
 
 ##### Transform Necessary Columns for calculation
-```{r Mutate Columns, include=FALSE}
-# Transform Necessary Columns
+```{r trnasform Columns , include=FALSE}
 
-tripdata_all <- mutate(tripdata_all, ride_id = as.character(ride_id)
-                  ,rideable_type = as.character(rideable_type)) 
+#Transform data
 
-tripdata_all <- mutate(tripdata_all, started_date = as_datetime(started_at))
-
-tripdata_all <- mutate(tripdata_all, ended_date = as_datetime(ended_at))
-
-tripdata_all <- mutate(tripdata_all, ride_length = difftime(ended_date, started_date, units = "mins"))
-
-tripdata_all <- mutate(tripdata_all, ride_length = as.numeric(ride_length))
-
-tripdata_all <- mutate(tripdata_all, ride_length = as.POSIXct(ride_length*60, origin = "1960-01-01 00:00:00","GMT"))
-
-tripdata_all <- mutate(tripdata_all, ride_length = format(ride_length, format = "%H:%M:%S"))
-
-tripdata_all <- mutate(tripdata_all, week_of_day = wday(as.Date(started_date), label=TRUE, abbr = FALSE, week_start = 1))
+all_trips$start_date <- as.Date(all_trips$started_at)
+all_trips$end_date <- as.Date(all_trips$ended_at)
+all_trips$month <- format(as.Date(all_trips$start_date), "%m")
+all_trips$day <- format(as.Date(all_trips$start_date), "%d")
+all_trips$year <- format(as.Date(all_trips$start_date), "%Y")
+all_trips$day_of_week <- format(as.Date(all_trips$start_date), "%A")
 
 ```
 
-##### Transform Necessary Columns for calculation
-```{r Mutate Columns 2, include=FALSE}
-
-#Transform additional data
-
-tripdata_all$date <- as.Date(tripdata_all$started_at)
-tripdata_all$month <- format(as.Date(tripdata_all$date), "%m")
-tripdata_all$day <- format(as.Date(tripdata_all$date), "%d")
-tripdata_all$year <- format(as.Date(tripdata_all$date), "%Y")
-tripdata_all$day_of_week <- format(as.Date(tripdata_all$date), "%A")
-
-```
-
-##### Verify if column is numeric
+##### Create a ride length column
 ```{r Mutate Columns 3, include=FALSE}
 
-tripdata_all$ride_length2 <- difftime(tripdata_all$ended_at,tripdata_all$started_at)
+#Create a ride_length column for calculation of trends. 
+#Create a ride_length_hms column to display trip duration.
+all_trips$ride_length <- difftime(all_trips$ended_at,all_trips$started_at)
 
-is.factor(tripdata_all$ride_length2)
-tripdata_all$ride_length2 <- as.numeric(as.character(tripdata_all$ride_length2))
-is.numeric(tripdata_all$ride_length2)
+
+is.factor(all_trips$ride_length)
+all_trips$ride_length <- as.numeric(as.character(all_trips$ride_length))
+is.numeric(all_trips$ride_length)
+
+
+all_trips$ride_length_hms <- as.POSIXct(all_trips$ride_length, origin = "1960-01-01 00:00:00","GMT")
+all_trips$ride_length_hms <- format(all_trips$ride_length_hms, format = "%H:%M:%S")
+
+
 
 ```
 
@@ -278,7 +130,7 @@ is.numeric(tripdata_all$ride_length2)
 
 ## Remove data with less than 0 ride_length
 
-tripdata_all_v2 <- tripdata_all[!(tripdata_all$start_station_name == "HQ QR" | tripdata_all$ride_length2<0),]
+all_trips_v2 <- all_trips[!(all_trips$start_station_name == "HQ QR" | tripdata_all$ride_length2<0),]
 
 
 # Inspect the structure of the columns
