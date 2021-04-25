@@ -54,9 +54,11 @@ Deliverable
 # # # # # # # # # # # # # # # # # # # # # # # 
 
 install.packages("tidyverse")
+install.packages("hms")
 
 ### Load Necessary libraries
 library(tidyverse)
+library(hms)
 
 ```
 
@@ -109,6 +111,7 @@ all_trips$day_of_week <- format(as.Date(all_trips$start_date), "%A")
 
 #Create a ride_length column for calculation of trends. 
 #Create a ride_length_hms column to display trip duration.
+
 all_trips$ride_length <- difftime(all_trips$ended_at,all_trips$started_at)
 
 
@@ -117,10 +120,9 @@ all_trips$ride_length <- as.numeric(as.character(all_trips$ride_length))
 is.numeric(all_trips$ride_length)
 
 
-all_trips$ride_length_hms <- as.POSIXct(all_trips$ride_length, origin = "1960-01-01 00:00:00","GMT")
+all_trips$ride_length_hms <- as.POSIXct(all_trips$ride_length, origin = "1960-01-01 00:00:00", "GMT")
 all_trips$ride_length_hms <- format(all_trips$ride_length_hms, format = "%H:%M:%S")
-
-
+all_trips$ride_length_hms <- as_hms(all_trips$ride_length_hms)
 
 ```
 
@@ -130,12 +132,14 @@ all_trips$ride_length_hms <- format(all_trips$ride_length_hms, format = "%H:%M:%
 
 ## Remove data with less than 0 ride_length
 
-all_trips_v2 <- all_trips[!(all_trips$start_station_name == "HQ QR" | tripdata_all$ride_length2<0),]
+all_trips_v2 <- filter(all_trips, ride_length >= 0)
+
+#all_trips_v2 <- all_trips %>%
+#  filter(all_trips$ride_length <0)
 
 
 # Inspect the structure of the columns
-str(tripdata_all)
-str(tripdata_all_v2)
+str(all_trips_v2)
 
 ```
 
@@ -144,42 +148,43 @@ str(tripdata_all_v2)
 ```{r Initial Analysis}
 
 # Descriptive analysis on ride_length (all figures in seconds)
-mean(tripdata_all_v2$ride_length2) #straight average (total ride length / rides)
-median(tripdata_all_v2$ride_length2) #midpoint number in the ascending array of ride lengths
-max(tripdata_all_v2$ride_length2) #longest ride
-min(tripdata_all_v2$ride_length2) #shortest ride
+mean(all_trips_v2$ride_length) #straight average (total ride length / rides)
+median(all_trips_v2$ride_length) #midpoint number in the ascending array of ride lengths
+max(all_trips_v2$ride_length) #longest ride
+min(all_trips_v2$ride_length) #shortest ride
 
 # You can condense the four lines above to one line using summary() on the specific attribute
-summary(tripdata_all_v2$ride_length2)
+summary(all_trips_v2$ride_length)
 
 ```
 
 ##### Compare members and casual users - mean
 ```{r Compare members and casual users }
 # Compare members and casual users
-aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = mean)
+#aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = mean)
+aggregate(all_trips_v2$ride_length)
 ```
 
 ##### Compare members and casual users - median
 ```{r Compare members and casual users 2}
-aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = median)
+aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = median)
 ```
 
 ##### Compare members and casual users - max
 ```{r Compare members and casual users 3}
-aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = max)
+aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = max)
 ```
 
 ##### Compare members and casual users - min
 ```{r Compare members and casual users 4}
-aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual, FUN = min)
+aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = min)
 ```
 
 ##### See the average ride time by each day for members vs casual users
 ```{r See the average ride time by each day for members vs casual users, include=FALSE}
 
 # See the average ride time by each day for members vs casual users
-aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdata_all_v2$day_of_week, FUN = mean)
+aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual + all_trips_v2$day_of_week, FUN = mean)
 
 ```
 
@@ -187,61 +192,45 @@ aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdat
 ##### Minor fix on Day of week
 ```{r Fix week order, include=FALSE}
 # Notice that the days of the week are out of order. Let's fix that.
-tripdata_all_v2$day_of_week <- ordered(tripdata_all_v2$day_of_week, levels=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
+all_trips_v2$day_of_week <- ordered(all_trips_v2$day_of_week, levels=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
 
 ```
 
 ##### See the average ride time by each day for members vs casual users
 ```{r See the average ride time by each day for members vs casual users 2}
 # Now, let's run the average ride time by each day for members vs casual users
-aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdata_all_v2$day_of_week, FUN = mean)
+aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual + all_trips_v2$day_of_week, FUN = mean)
+
+```
+
+```{r}
+
+
+
 
 ```
 
 ##### analyze ridership data by type and weekday
 ```{r analyze ridership data by type and weekday}
 
-# analyze ridership data by type and weekday
-tripdata_all_v2 %>% 
-  mutate(weekday = wday(started_at, label = TRUE)) %>%  #creates weekday field using wday()
-  group_by(member_casual, weekday) %>%  #groups by usertype and weekday
-  summarise(number_of_rides = n()						#calculates the number of rides and average duration 
-  ,average_duration = mean(ride_length2)) %>% 		# calculates the average duration
-  arrange(member_casual, weekday)		
 ```
 
 ##### Visualize the number of rides by rider type
 ```{r Lets visualize the number of rides by rider type}
 # Let's visualize the number of rides by rider type
-tripdata_all_v2 %>% 
-  mutate(weekday = wday(started_at, label = TRUE)) %>% 
-  group_by(member_casual, weekday) %>% 
-  summarise(number_of_rides = n(), average_duration = mean(ride_length2)) %>% 
-  arrange(member_casual, weekday)  %>% 
-  ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) +
-  geom_col(position = "stack")
-  theme(axis.text.x = element_text(angle = 45)) +
-  theme(axis.text.y = element_text(margin = 100))) 
+
 
 ```
 
 ##### Create a visualization for average duration
 ```{r Lets create a visualization for average duration}
 # Let's create a visualization for average duration
-tripdata_all_v2 %>% 
-  mutate(weekday = wday(started_at, label = TRUE)) %>% 
-  group_by(member_casual, weekday) %>% 
-  summarise(number_of_rides = n(), average_duration = mean(ride_length2)) %>% 
-  arrange(member_casual, weekday)  %>% 
-  ggplot(aes(x = weekday, y = average_duration, fill = member_casual)) +
-  geom_col(position = "dodge")
 
 ```
 
 #####
 ```{r eval=FALSE, include=FALSE}
-counts <- aggregate(tripdata_all_v2$ride_length2 ~ tripdata_all_v2$member_casual + tripdata_all_v2$day_of_week, FUN = mean)
-write.csv(counts, file = 'D:/Portfolio/GDA_Case_Study/Bike Share/data/divvy-tripdata/avg_ride_length.csv')
+
 ```
 
 
