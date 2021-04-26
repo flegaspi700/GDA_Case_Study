@@ -8,7 +8,7 @@
 * An analysis has been done on the trip data from Jan, 2021 to March, 2021. 
 * We performed analysis on the duration of rides between Members and Casual users.
 
-![Alt text](Bike Share/data/ArL.png?raw=true "Title")
+![Alt text](https://github.com/flegaspi700/GDA_Case_Study/blob/aed40ff0e467115e95ccb4658436155a31824506/Bike%20Share/data/ArL.png)
 
 ## Conclusion: 
 * Based on our analysis I have 2 main points:
