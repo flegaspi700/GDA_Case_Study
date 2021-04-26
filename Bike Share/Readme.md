@@ -11,7 +11,7 @@
 * End your presentation by summarizing key takeaways of all of the
 problem-solving you conducted, highlighting what you have learned from this.
 
-Documentation of the cleaning and transformation process can be downloaded [here]https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true.
+Documentation of the cleaning and transformation process can be downloaded [here](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true).
 
 ## Next steps: 
 * Choose the best solution and propose recommendations for the client or business to take. Explain why you made your choice and how this will affect the scenario in a positive way. Be specific and include what needs to be done, who should enforce it, and when.
