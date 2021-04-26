@@ -31,8 +31,10 @@ Key tasks
     3. Transform the data so you can work with it effectively.
     4. Document the cleaning process.
 
-Deliverable [link](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true)
+Deliverable 
 
     - I will be using RStudio for the cleaning and transformation of data. 
-    - Documentation of the cleaning and transformation process can be downloaded [link](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true) 
+
+Documentation of the cleaning and transformation process can be downloaded [here](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true)
+
 
