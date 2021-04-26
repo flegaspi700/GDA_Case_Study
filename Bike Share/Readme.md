@@ -8,6 +8,8 @@
 * An analysis has been done on the trip data from Jan, 2021 to March, 2021. 
 * We performed analysis on the duration of rides between Members and Casual users.
 
+![Alt text](Bike Share/data/ArL.png?raw=true "Title")
+
 ## Conclusion: 
 * Based on our analysis I have 2 main points:
   *   Members have the most number of usage of the bikes but non members have the highest average duration on a weekly basis. 
