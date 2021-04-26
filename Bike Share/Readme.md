@@ -2,9 +2,7 @@
 * Design marketing strategies aimed at converting casual riders into annual members. In order to do that, however, the marketing analyst team needs to better understand how annual members and casual riders differ, why casual riders would buy a membership, and how digital media could affect their marketing tactics. Moreno and her team are interested in analyzing the Cyclistic historical bike trip data to identify trends.
 
 ## Problems: 
-* You need to identify what the major problems are, explain how you
-have analyzed the problem, and present any facts you are using to support
-your findings
+* The main problem we need to solve is how do annual members and casual riders use Cyclistic bikes differently.
 
 ## Solutions: 
 * Outline a solution that would alleviate the problem and have a few alternatives in mind to show that you have given the case study considerable thought. Don’t forget to include pros and cons for each solution.
