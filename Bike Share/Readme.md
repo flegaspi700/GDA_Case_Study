@@ -9,14 +9,16 @@
 * We performed analysis on the duration of rides between Members and Casual users.
 
 ![Alt text](https://github.com/flegaspi700/GDA_Case_Study/blob/aed40ff0e467115e95ccb4658436155a31824506/Bike%20Share/data/ArL.png)
+![Alt text](https://github.com/flegaspi700/GDA_Case_Study/blob/2bda741209c63e56baa94dcc8803881e8dc92b1d/Bike%20Share/data/NoR.png)
+
+
+Full documentation of the cleaning and transformation process can be downloaded [here](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true).
 
 ## Conclusion: 
 * Based on our analysis I have 2 main points:
   *   Members have the most number of usage of the bikes but non members have the highest average duration on a weekly basis. 
   *   Casual users use the bikers longer than members on a weekly basis. 
 * As a conclusion Cyclistic marketing team should focus on converting casual riders to members.
-
-Documentation of the cleaning and transformation process can be downloaded [here](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true).
 
 ## Next steps: 
 * I will perform additional analysis by location, so I can formulate recommendations by location. 
