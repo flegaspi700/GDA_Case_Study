@@ -17,6 +17,8 @@
 
 Full documentation of the cleaning and transformation process can be downloaded [here](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true).
 
+Here is the Tableau [link](https://public.tableau.com/views/GDA_BikeShare_FML/GDA_BikeShare?:language=en&:display_count=y&publish=yes&:origin=viz_share_link).
+
 ## Conclusion: 
 * Based on our analysis I have 2 main points:
   *   Members have the most number of usage of the bikes but non members have the highest average duration on a weekly basis. 
