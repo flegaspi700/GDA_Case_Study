@@ -43,22 +43,25 @@ Key tasks
 
 Deliverable
 
-    - A summary of your analysis 
+    - Here is a summary of the analysis of the Bike Share data from Jan, 2021 to March, 2021
+    - The data cleaning has been performed in RStudio.
+    - This analysis is for case study 1 from the Google Data Analytics Certificate (Cyclistic).
 
-##### Start of cleaning and transformation
-###### This analysis is for case study 1 from the Google Data Analytics Certificate (Cyclistic).  
+    
 
-###### Install required packages and library for data cleaning, transformation, and visualization.
+Setup environment in R:
 
-```{r Install Packages, eval=FALSE, include=FALSE}
-# # # # # # # # # # # # # # # # # # # # # # # 
+    - Install required packages and library for data cleaning, transformation, and visualization.
 
-install.packages("tidyverse")
-install.packages("hms")
+```{r Install Packages, include=FALSE}
+install.packages('tidyverse', repos = "http://cran.us.r-project.org")
+install.packages("hms", repos = "http://cran.us.r-project.org")
+install.packages("lubridate", repos = "http://cran.us.r-project.org")
 
 ### Load Necessary libraries
 library(tidyverse)
 library(hms)
+library(lubridate)
 
 options(scipen=999)  # turn off scientific notation like 1e+06
 library(ggplot2)
@@ -66,7 +69,16 @@ library(ggplot2)
 ```
 
 
-##### Loading multiple .csv files as separate data frames
+Start of data cleaning and transformation:
+
+    - Fist we need to load the csv files to a dataframe
+    - Check data for consistency in reparation for cleaning and transoformation.
+    - Inspect the new dataframe that has been created
+    - Transform Necessary Columns for calculation
+    - Create a ride length column
+    - Remove unnecessary data.
+    - Perform initial analysis of data
+    
 ```{r Load csv files to dataframe, include=FALSE}
 # path to folder that holds multiple .csv files
 
@@ -78,10 +90,7 @@ all_trips <- do.call(rbind, csv)
 
 ```
 
-##### Check data for consistency in reparation for cleaning and transoformation.
 
-
-##### Inspect the new dataframe that has been created
 ```{r Inspect combined data, include=FALSE}
 # Inspect the new dataframe that has been created
 
@@ -95,7 +104,6 @@ summary(all_trips)  #Statistical summary of data. Mainly for numerics
 ```
 
 
-##### Transform Necessary Columns for calculation
 ```{r trnasform Columns , include=FALSE}
 
 #Transform data
@@ -109,7 +117,7 @@ all_trips$day_of_week <- format(as.Date(all_trips$start_date), "%A")
 
 ```
 
-##### Create a ride length column
+
 ```{r Mutate Columns 3, include=FALSE}
 
 #Create a ride_length column for calculation of trends. 
@@ -125,13 +133,12 @@ is.numeric(all_trips$ride_length)
 
 all_trips$ride_length_hms <- as.POSIXct(all_trips$ride_length, origin = "1960-01-01 00:00:00", "GMT")
 all_trips$ride_length_hms <- format(all_trips$ride_length_hms, format = "%H:%M:%S")
-all_trips$ride_length_hms <- as_hms(all_trips$ride_length_hms)
+all_trips$ride_length_hms <- as.hms(all_trips$ride_length_hms)
 
 #mutate(weekday = wday(started_at, label = TRUE))
 ```
 
 
-##### Remove bad data. 
 ```{r Remove bad data, include=FALSE}
 
 ## Remove data with less than 0 ride_length
@@ -147,45 +154,45 @@ str(all_trips_v2)
 
 ```
 
+Here is the statistical summary of the data:
 
-##### Perform initial analysis of data
-```{r Initial Analysis}
+```{r Initial Analysis, echo=FALSE}
 
 # Descriptive analysis on ride_length (all figures in seconds)
-mean(all_trips_v2$ride_length) #straight average (total ride length / rides)
-median(all_trips_v2$ride_length) #midpoint number in the ascending array of ride lengths
-max(all_trips_v2$ride_length) #longest ride
-min(all_trips_v2$ride_length) #shortest ride
+#mean(all_trips_v2$ride_length) #straight average (total ride length / rides)
+#median(all_trips_v2$ride_length) #midpoint number in the ascending array of ride lengths
+#max(all_trips_v2$ride_length) #longest ride
+#min(all_trips_v2$ride_length) #shortest ride
 
 # You can condense the four lines above to one line using summary() on the specific attribute
 summary(all_trips_v2$ride_length)
 
 ```
 
-##### Compare members and casual users - mean
-```{r Compare members and casual users }
+##### Compare members and casual users using mean
+
+```{r Compare members and casual users, echo=FALSE}
 # Compare members and casual users
 aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = mean)
 #aggregate(all_trips_v2$ride_length)
 ```
 
-##### Compare members and casual users - median
-```{r Compare members and casual users 2}
+##### Compare members and casual users using median
+```{r Compare members and casual users 2, echo=FALSE}
 aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = median)
 ```
 
-##### Compare members and casual users - max
-```{r Compare members and casual users 3}
+##### Compare members and casual users using max
+```{r Compare members and casual users 3, echo=FALSE}
 aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = max)
 ```
 
-##### Compare members and casual users - min
-```{r Compare members and casual users 4}
+##### Compare members and casual users using min
+```{r Compare members and casual users 4, echo=FALSE}
 aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = min)
 ```
 
 
-##### Minor fix on Day of week
 ```{r Fix week order, include=FALSE}
 # Notice that the days of the week are out of order. Let's fix that.
 all_trips_v2$day_of_week <- ordered(all_trips_v2$day_of_week, levels=c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"))
@@ -193,13 +200,14 @@ all_trips_v2$day_of_week <- ordered(all_trips_v2$day_of_week, levels=c("Sunday",
 ```
 
 ##### See the average ride time by each day for members vs casual users
-```{r See the average ride time by each day for members vs casual users 2}
+```{r See the average ride time by each day for members vs casual users 2, echo=FALSE}
 # Now, let's run the average ride time by each day for members vs casual users
 aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual + all_trips_v2$day_of_week, FUN = mean)
 
 ```
 
-```{r}
+#### Here is the data analysis visualization using a bar chart.
+```{r echo=FALSE}
 
 #data(all_trips_v2, package = "ggplot2")
 all_trips_v2 %>%
@@ -211,26 +219,26 @@ all_trips_v2 %>%
     geom_bar(stat="identity", position = "dodge") + 
     scale_fill_brewer(palette="Dark2") +
     theme_minimal() + 
-    labs(title = "Member and Casual average ride length", x = "Day of Week", y = "Average duration", fill = "Member - Casual")
+    labs(title = "Member and Casual Number of rides", x = "Day of Week", y = "Number of Rides", fill = "Member - Casual")
 
 
 ```
 
-##### analyze ridership data by type and weekday
-```{r analyze ridership data by type and weekday}
-
-```
-
-##### Visualize the number of rides by rider type
-```{r Lets visualize the number of rides by rider type}
-# Let's visualize the number of rides by rider type
 
 
-```
-
-##### Create a visualization for average duration
-```{r Lets create a visualization for average duration}
+```{r Lets create a visualization for average duration, echo=FALSE}
 # Let's create a visualization for average duration
+
+all_trips_v2 %>%
+    mutate(weekday = wday(started_at, label = TRUE)) %>% 
+    group_by(member_casual, weekday) %>% 
+    summarise(number_of_rides = n(), average_duration = mean(ride_length)) %>%
+    arrange(member_casual, weekday)  %>%
+    ggplot(aes(x=weekday, y=average_duration, fill = member_casual)) +
+    geom_bar(stat="identity", position = "dodge") + 
+    scale_fill_brewer(palette="Dark2") +
+    theme_minimal() + 
+    labs(title = "Member and Casual average ride length", x = "Day of Week", y = "Average duration", fill = "Member - Casual")
 
 ```
 
