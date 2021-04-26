@@ -34,5 +34,5 @@ Key tasks
 Deliverable
 
     - I will be using RStudio for the cleaning and transformation of data. 
-    - Documentation of the cleaning and transformation process is in Case Study Roadmap - Analyze.rmd file. 
+    - Documentation of the cleaning and transformation process can be downloaded [here](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx) 
 
