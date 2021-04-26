@@ -10,8 +10,8 @@
 
 ## Conclusion: 
 * Based on our analysis I have 2 main points:
-*   Members have the most number of usage of the bikes but non members have the highest average duration on a weekly basis. 
-*   Casual users use the bikers longer than members on a weekly basis. 
+  *   Members have the most number of usage of the bikes but non members have the highest average duration on a weekly basis. 
+  *   Casual users use the bikers longer than members on a weekly basis. 
 * As a conclusion Cyclistic marketing team should focus on converting casual riders to members.
 
 Documentation of the cleaning and transformation process can be downloaded [here](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true).
