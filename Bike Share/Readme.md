@@ -24,7 +24,11 @@ Full documentation of the cleaning and transformation process can be downloaded 
 * I will perform additional analysis by location, so I can formulate recommendations by location. 
 
 
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| Case Study Guide  | 
+| ------------- | 
+| [Ask](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case%20Study%20Roadmap%20-%20Ask.md)  | 
+| [Prepare](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case%20Study%20Roadmap%20-%20Prepare.md) |
+| [Process](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case%20Study%20Roadmap%20-%20Process.md) |
+| [Analyze](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case%20Study%20Roadmap%20-%20Analyze.Rmd) |
+| [Share](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case%20Study%20Roadmap%20-%20Share.md) |
+| [Act](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case%20Study%20Roadmap%20-%20Act.md) |
