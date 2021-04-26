@@ -12,6 +12,9 @@
 ![Alt text](https://github.com/flegaspi700/GDA_Case_Study/blob/2bda741209c63e56baa94dcc8803881e8dc92b1d/Bike%20Share/data/NoR.png)
 
 
+![Alt text](https://github.com/flegaspi700/GDA_Case_Study/blob/008c9d534a39f4b051467b53b56ed3a77a484c78/Bike%20Share/data/AverageDurationofbikerides.png)
+
+
 Full documentation of the cleaning and transformation process can be downloaded [here](https://github.com/flegaspi700/GDA_Case_Study/blob/main/Bike%20Share/Case-Study-Roadmap---Analyze.docx?raw=true).
 
 ## Conclusion: 
